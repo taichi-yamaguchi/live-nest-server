@@ -2,17 +2,19 @@ version: '3.8'
 
 services:
   nginx:
-    build: ./nginx
+    build: ./.nginx
     ports:
       - '1935:1935' # RTMP
       - '8080:8080' # HLS / HTTP
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./.nginx/nginx.conf:/etc/nginx/nginx.conf
       - hls_data:/mnt/hls
     restart: always
 
   nest:
-    build: ./nest
+    build:
+      context: .
+      dockerfile: ./.nest/dockerfile
     ports:
       - '3000:3000'
     environment:
